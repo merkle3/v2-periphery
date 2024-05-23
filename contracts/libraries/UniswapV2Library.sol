@@ -17,12 +17,7 @@ library UniswapV2Library {
 
     // calculates the CREATE2 address for a pair without making any external calls
     function pairFor(address factory, address tokenA, address tokenB) internal view returns (address pair) {
-        console.log(tokenA);
-        console.log(tokenB);
         (address token0, address token1) = sortTokens(tokenA, tokenB);
-        console.log(token0);
-        console.log(token1);
-        console.log(factory);
         pair = address(
             uint256(
                 keccak256(
@@ -30,7 +25,7 @@ library UniswapV2Library {
                         hex"ff",
                         factory,
                         keccak256(abi.encodePacked(token0, token1)),
-                        hex"9a128522681e0cddb6e44d2603b041f5d7aa750bee1970898d7f3aaf524f6cd7" // init code hash
+                        hex"1643e08f64decb263b31bc0d8fe35b6abfe0d15ec157f4cd2656b93200e3b3ad" // init code hash
                     )
                 )
             )
@@ -45,10 +40,9 @@ library UniswapV2Library {
     {
         (address token0,) = sortTokens(tokenA, tokenB);
         address pair = pairFor(factory, tokenA, tokenB);
-        console.log(pair);
+
         (uint256 reserve0, uint256 reserve1,) = IUniswapV2Pair(pair).getReserves();
-        console.log(reserve0);
-        console.log(reserve1);
+
         (reserveA, reserveB) = tokenA == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
     }
 
